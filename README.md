@@ -58,3 +58,16 @@
 
 #### 예시 코드:  
 [예제 코드 보기](https://github.com/yoonc01/solve/blob/main/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4/1/276013.%E2%80%85Python%E2%80%85%EA%B0%9C%EB%B0%9C%EC%9E%90%E2%80%85%EC%B0%BE%EA%B8%B0/Python%E2%80%85%EA%B0%9C%EB%B0%9C%EC%9E%90%E2%80%85%EC%B0%BE%EA%B8%B0.sql)
+
+다음과 같이 **7번 항목**을 추가하면 될 것 같아! 🚀  
+
+---
+
+### 7. NULL 값 필터링 (`IS NULL` / `IS NOT NULL`)  
+NULL 값을 찾거나 제외할 때 `IS NULL` 또는 `IS NOT NULL`을 사용할 수 있습니다.  
+
+- `IS NULL` : 해당 열이 `NULL`인 데이터만 조회  
+- `IS NOT NULL` : 해당 열이 `NULL이 아닌 값`을 가진 데이터 조회  
+
+#### 예시 코드:  
+[예제 코드 보기](https://github.com/yoonc01/solve/blob/main/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4/1/293258.%E2%80%85%EC%9E%94%EC%B1%99%EC%9D%B4%E2%80%85%EC%9E%A1%EC%9D%80%E2%80%85%EC%88%98%E2%80%85%EA%B5%AC%ED%95%98%EA%B8%B0/%EC%9E%94%EC%B1%99%EC%9D%B4%E2%80%85%EC%9E%A1%EC%9D%80%E2%80%85%EC%88%98%E2%80%85%EA%B5%AC%ED%95%98%EA%B8%B0.sql)
