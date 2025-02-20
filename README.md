@@ -136,3 +136,41 @@ NULL 값을 특정 값(예: `10`)으로 대체한 후, 평균값을 계산하고
 [예제 코드 보기](https://github.com/yoonc01/solve/blob/main/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4/1/298515.%E2%80%85%EC%9E%A1%EC%9D%80%E2%80%85%EB%AC%BC%EA%B3%A0%EA%B8%B0%E2%80%85%EC%A4%91%E2%80%85%EA%B0%80%EC%9E%A5%E2%80%85%ED%81%B0%E2%80%85%EB%AC%BC%EA%B3%A0%EA%B8%B0%EC%9D%98%E2%80%85%EA%B8%B8%EC%9D%B4%E2%80%85%EA%B5%AC%ED%95%98%EA%B8%B0/%EC%9E%A1%EC%9D%80%E2%80%85%EB%AC%BC%EA%B3%A0%EA%B8%B0%E2%80%85%EC%A4%91%E2%80%85%EA%B0%80%EC%9E%A5%E2%80%85%ED%81%B0%E2%80%85%EB%AC%BC%EA%B3%A0%EA%B8%B0%EC%9D%98%E2%80%85%EA%B8%B8%EC%9D%B4%E2%80%85%EA%B5%AC%ED%95%98%EA%B8%B0.sql)  
 
 ---
+
+### 11. 최댓값 조회 및 서브쿼리를 이용한 특정 값 필터링  
+✅ **사용되는 SQL 함수**  
+- `MAX(x)` : 최댓값 조회  
+- `WHERE x = (SELECT MAX(y) FROM table)` : **서브쿼리**를 이용한 특정 값 필터링  
+
+✅ **서브쿼리(서브쿼리, Subquery)란?**  
+- **서브쿼리**는 SQL문 내부에 포함된 또 다른 **SELECT 문**을 의미합니다.  
+- 보통 `WHERE`, `FROM`, `SELECT` 절에서 사용되며, 특정 값을 동적으로 조회할 때 유용합니다.  
+
+✅ **서브쿼리 활용 예시**  
+1️⃣ **최댓값 조회 후 해당 행 찾기**  
+```sql
+SELECT *
+FROM FOOD_PRODUCT
+WHERE PRICE = (SELECT MAX(PRICE) FROM FOOD_PRODUCT);
+```
+- `SELECT MAX(PRICE) FROM FOOD_PRODUCT` : 가장 비싼 가격을 찾음  
+- `WHERE PRICE = (서브쿼리 결과)` : 그 가격을 가진 행을 조회  
+
+2️⃣ **특정 카테고리에 속하는 제품 중 최소 가격 조회**  
+```sql
+SELECT *
+FROM FOOD_PRODUCT
+WHERE PRICE = (SELECT MIN(PRICE) FROM FOOD_PRODUCT WHERE CATEGORY = '식용유');
+```
+- `SELECT MIN(PRICE) ... WHERE CATEGORY = '식용유'` : 식용유 중 가장 저렴한 가격 조회  
+- `WHERE PRICE = (서브쿼리 결과)` : 그 가격을 가진 제품 조회  
+
+✅ **설명**  
+`MAX(PRICE)`를 사용하여 가장 비싼 식품의 가격을 찾고, 해당 가격을 가진 식품의 정보를 조회합니다.  
+이때, **서브쿼리**를 활용하여 최댓값을 동적으로 가져오고, `WHERE` 절에서 그 값을 필터링합니다.  
+
+✅ **예시 코드**  
+[예제 코드 보기](https://github.com/yoonc01/solve/blob/main/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4/2/131115.%E2%80%85%EA%B0%80%EA%B2%A9%EC%9D%B4%E2%80%85%EC%A0%9C%EC%9D%BC%E2%80%85%EB%B9%84%EC%8B%BC%E2%80%85%EC%8B%9D%ED%92%88%EC%9D%98%E2%80%85%EC%A0%95%EB%B3%B4%E2%80%85%EC%B6%9C%EB%A0%A5%ED%95%98%EA%B8%B0/%EA%B0%80%EA%B2%A9%EC%9D%B4%E2%80%85%EC%A0%9C%EC%9D%BC%E2%80%85%EB%B9%84%EC%8B%BC%E2%80%85%EC%8B%9D%ED%92%88%EC%9D%98%E2%80%85%EC%A0%95%EB%B3%B4%E2%80%85%EC%B6%9C%EB%A0%A5%ED%95%98%EA%B8%B0.sql)  
+
+---
+
