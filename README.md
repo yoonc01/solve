@@ -184,4 +184,19 @@ WHERE PRICE = (SELECT MIN(PRICE) FROM FOOD_PRODUCT WHERE CATEGORY = '식용유')
 ✅ **예시 코드**  
 [예제 코드 보기](https://github.com/yoonc01/solve/blob/main/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4/2/59038.%E2%80%85%EC%B5%9C%EC%86%9F%EA%B0%92%E2%80%85%EA%B5%AC%ED%95%98%EA%B8%B0/%EC%B5%9C%EC%86%9F%EA%B0%92%E2%80%85%EA%B5%AC%ED%95%98%EA%B8%B0.sql)
 
+---
 
+### 13. 그룹화와 조건 필터링을 이용한 재구매 회원 및 상품 조회  
+✅ **사용되는 SQL 함수**  
+- `GROUP BY x, y` : 특정 컬럼 조합으로 그룹화  
+- `HAVING COUNT(z) > n` : 그룹별 개수가 특정 값 이상인 데이터 필터링  
+- `ORDER BY x ASC, y DESC` : 정렬 기준 설정  
+
+✅ **설명**  
+동일한 회원(`USER_ID`)이 동일한 상품(`PRODUCT_ID`)을 **두 번 이상 구매한 경우**를 찾기 위해,  
+- `GROUP BY USER_ID, PRODUCT_ID`를 사용하여 **회원-상품 조합별로 그룹화**  
+- `HAVING COUNT(ONLINE_SALE_ID) > 1`을 사용하여 **재구매(2회 이상 구매)한 조합 필터링**  
+- `ORDER BY USER_ID ASC, PRODUCT_ID DESC`로 정렬하여 **회원 ID 오름차순, 상품 ID 내림차순 출력**  
+
+✅ **예시 코드**  
+[예제 코드 보기](https://github.com/yoonc01/solve/blob/main/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4/2/131536.%E2%80%85%EC%9E%AC%EA%B5%AC%EB%A7%A4%EA%B0%80%E2%80%85%EC%9D%BC%EC%96%B4%EB%82%9C%E2%80%85%EC%83%81%ED%92%88%EA%B3%BC%E2%80%85%ED%9A%8C%EC%9B%90%E2%80%85%EB%A6%AC%EC%8A%A4%ED%8A%B8%E2%80%85%EA%B5%AC%ED%95%98%EA%B8%B0/%EC%9E%AC%EA%B5%AC%EB%A7%A4%EA%B0%80%E2%80%85%EC%9D%BC%EC%96%B4%EB%82%9C%E2%80%85%EC%83%81%ED%92%88%EA%B3%BC%E2%80%85%ED%9A%8C%EC%9B%90%E2%80%85%EB%A6%AC%EC%8A%A4%ED%8A%B8%E2%80%85%EA%B5%AC%ED%95%98%EA%B8%B0.sql)  
