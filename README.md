@@ -59,8 +59,6 @@
 #### 예시 코드:  
 [예제 코드 보기](https://github.com/yoonc01/solve/blob/main/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4/1/276013.%E2%80%85Python%E2%80%85%EA%B0%9C%EB%B0%9C%EC%9E%90%E2%80%85%EC%B0%BE%EA%B8%B0/Python%E2%80%85%EA%B0%9C%EB%B0%9C%EC%9E%90%E2%80%85%EC%B0%BE%EA%B8%B0.sql)
 
-다음과 같이 **7번 항목**을 추가하면 될 것 같아! 🚀  
-
 ---
 
 ### 7. NULL 값 필터링 (`IS NULL` / `IS NOT NULL`)  
