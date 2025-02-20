@@ -174,3 +174,14 @@ WHERE PRICE = (SELECT MIN(PRICE) FROM FOOD_PRODUCT WHERE CATEGORY = '식용유')
 
 ---
 
+### 12. 최댓값 구하기 (`MAX`)  
+✅ **사용되는 SQL 함수**  
+- `MIN(x)` : 특정 열에서 가장 작은 값 조회  
+
+✅ **설명**  
+`MIN` 함수를 사용하여 데이터에서 가장 작은 값을 찾습니다.  
+
+✅ **예시 코드**  
+[예제 코드 보기](https://github.com/yoonc01/solve/blob/main/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4/2/59038.%E2%80%85%EC%B5%9C%EC%86%9F%EA%B0%92%E2%80%85%EA%B5%AC%ED%95%98%EA%B8%B0/%EC%B5%9C%EC%86%9F%EA%B0%92%E2%80%85%EA%B5%AC%ED%95%98%EA%B8%B0.sql)
+
+
