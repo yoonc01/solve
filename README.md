@@ -186,7 +186,7 @@ WHERE PRICE = (SELECT MIN(PRICE) FROM FOOD_PRODUCT WHERE CATEGORY = '식용유')
 
 ---
 
-### 13. 그룹화와 조건 필터링을 이용한 재구매 회원 및 상품 조회  
+### 13. 그룹화와 조건 필터링을 이용한 조회  
 ✅ **사용되는 SQL 함수**  
 - `GROUP BY x, y` : 특정 컬럼 조합으로 그룹화  
 - `HAVING COUNT(z) > n` : 그룹별 개수가 특정 값 이상인 데이터 필터링  
@@ -200,3 +200,36 @@ WHERE PRICE = (SELECT MIN(PRICE) FROM FOOD_PRODUCT WHERE CATEGORY = '식용유')
 
 ✅ **예시 코드**  
 [예제 코드 보기](https://github.com/yoonc01/solve/blob/main/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4/2/131536.%E2%80%85%EC%9E%AC%EA%B5%AC%EB%A7%A4%EA%B0%80%E2%80%85%EC%9D%BC%EC%96%B4%EB%82%9C%E2%80%85%EC%83%81%ED%92%88%EA%B3%BC%E2%80%85%ED%9A%8C%EC%9B%90%E2%80%85%EB%A6%AC%EC%8A%A4%ED%8A%B8%E2%80%85%EA%B5%AC%ED%95%98%EA%B8%B0/%EC%9E%AC%EA%B5%AC%EB%A7%A4%EA%B0%80%E2%80%85%EC%9D%BC%EC%96%B4%EB%82%9C%E2%80%85%EC%83%81%ED%92%88%EA%B3%BC%E2%80%85%ED%9A%8C%EC%9B%90%E2%80%85%EB%A6%AC%EC%8A%A4%ED%8A%B8%E2%80%85%EA%B5%AC%ED%95%98%EA%B8%B0.sql)  
+
+---
+
+### 14. 윈도우 함수(OVER)를 이용한 연도별 편차 계산  
+✅ **사용되는 SQL 함수**  
+- `YEAR(x)` : 날짜에서 연도 추출  
+- `MAX(x) OVER (PARTITION BY y)` : **윈도우 함수**를 사용하여 그룹별 최댓값 계산  
+
+✅ **윈도우 함수(OVER)란?**  
+윈도우 함수(OVER)는 **일반적인 GROUP BY와 달리 집계 결과를 각 행에 유지하면서 계산하는 방식**입니다.  
+즉, **데이터를 그룹화하면서도 개별 행의 정보는 그대로 유지**할 수 있습니다.  
+
+💡 **윈도우 함수의 주요 특징**  
+1️⃣ **GROUP BY 없이도 그룹별 값 계산 가능**  
+   - `OVER (PARTITION BY ...)`을 사용하면 각 그룹별로 계산된 값을 각 행에 추가할 수 있음  
+2️⃣ **원본 데이터 유지**  
+   - 일반적인 집계 함수(`MAX`, `SUM`, `AVG` 등)와 달리, **원본 테이블의 모든 행을 유지한 채 연산 수행**  
+3️⃣ **다른 열과 함께 활용 가능**  
+   - 서브쿼리를 사용하지 않고도 **원본 데이터와 집계 데이터를 함께 조회할 수 있음**  
+
+✅ **설명**  
+1️⃣ `YEAR(DIFFERENTIATION_DATE) AS YEAR` : **분화된 연도**를 추출  
+2️⃣ `MAX(SIZE_OF_COLONY) OVER (PARTITION BY YEAR(DIFFERENTIATION_DATE)) AS MAX_SIZE`  
+   - **각 연도별로 가장 큰 대장균의 크기**를 구함  
+   - **윈도우 함수(OVER)를 사용하여 연도별 MAX 값을 각 행에 추가**  
+3️⃣ `(MAX_SIZE - SIZE_OF_COLONY) AS YEAR_DEV`  
+   - **해당 연도의 최댓값에서 개별 대장균의 크기를 뺀 값(편차) 계산**  
+
+
+✅ **예시 코드**  
+[예제 코드 보기](https://github.com/yoonc01/solve/blob/main/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4/2/299310.%E2%80%85%EC%97%B0%EB%8F%84%EB%B3%84%E2%80%85%EB%8C%80%EC%9E%A5%EA%B7%A0%E2%80%85%ED%81%AC%EA%B8%B0%EC%9D%98%E2%80%85%ED%8E%B8%EC%B0%A8%E2%80%85%EA%B5%AC%ED%95%98%EA%B8%B0/%EC%97%B0%EB%8F%84%EB%B3%84%E2%80%85%EB%8C%80%EC%9E%A5%EA%B7%A0%E2%80%85%ED%81%AC%EA%B8%B0%EC%9D%98%E2%80%85%ED%8E%B8%EC%B0%A8%E2%80%85%EA%B5%AC%ED%95%98%EA%B8%B0.sql)  
+
+---
