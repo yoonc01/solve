@@ -69,3 +69,72 @@ NULL 값을 찾거나 제외할 때 `IS NULL` 또는 `IS NOT NULL`을 사용할 
 
 #### 예시 코드:  
 [예제 코드 보기](https://github.com/yoonc01/solve/blob/main/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4/1/293258.%E2%80%85%EC%9E%94%EC%B1%99%EC%9D%B4%E2%80%85%EC%9E%A1%EC%9D%80%E2%80%85%EC%88%98%E2%80%85%EA%B5%AC%ED%95%98%EA%B8%B0/%EC%9E%94%EC%B1%99%EC%9D%B4%E2%80%85%EC%9E%A1%EC%9D%80%E2%80%85%EC%88%98%E2%80%85%EA%B5%AC%ED%95%98%EA%B8%B0.sql)
+
+---
+
+### 8. SQL에서 자주 쓰이는 연산 함수  
+SQL에서는 데이터를 가공하고 분석할 때 **다양한 연산 함수**를 사용할 수 있습니다.  
+
+#### ✅ **NULL 값 처리 연산 (`COALESCE`, `IFNULL`)**  
+- `COALESCE(x, y, ...)` : **NULL이 아닌 첫 번째 값** 반환  
+- `IFNULL(x, y)` : **MySQL 전용, NULL이면 대체 값 반환**  
+
+```sql
+SELECT COALESCE(NULL, NULL, 'Python', 'SQL'); -- 결과: 'Python'
+SELECT IFNULL(SALARY, 0) FROM EMPLOYEES; -- MySQL 전용
+```
+
+#### ✅ **수학 연산 (`ROUND`, `CEIL`, `FLOOR`, `MOD`)**  
+- `ROUND(x, n)` : 소수점 `n`자리 반올림  
+- `CEIL(x)`, `FLOOR(x)` : 올림 / 내림  
+- `MOD(x, y)` : 나머지 연산  
+
+```sql
+SELECT ROUND(3.14159, 2); -- 결과: 3.14
+SELECT CEIL(2.1), FLOOR(2.9); -- 결과: 3, 2
+SELECT MOD(10, 3); -- 결과: 1
+```
+
+#### ✅ **조건 연산 (`CASE`)**  
+- 특정 조건에 따라 **다른 값 반환**  
+
+```sql
+SELECT ID, 
+       CASE WHEN AGE < 18 THEN '미성년자'
+            WHEN AGE >= 18 AND AGE < 60 THEN '성인'
+            ELSE '노인' 
+       END AS AGE_GROUP
+FROM USERS;
+```
+
+#### ✅ **문자열 연산 (`CONCAT`, `SUBSTRING`, `REPLACE`)**  
+- `CONCAT(x, y, ...)` : 문자열 연결  
+- `SUBSTRING(x, start, len)` : 부분 문자열 추출  
+- `REPLACE(x, old, new)` : 특정 문자열 변경  
+
+```sql
+SELECT CONCAT('Hello', ' ', 'World'); -- 결과: 'Hello World'
+SELECT SUBSTRING('Database', 1, 4); -- 결과: 'Data'
+SELECT REPLACE('I love Python', 'Python', 'SQL'); -- 결과: 'I love SQL'
+```
+
+#### ✅ **날짜 연산 (`DATE_ADD`, `DATEDIFF`)**  
+- `DATE_ADD(x, INTERVAL y DAY)` : 날짜 더하기  
+- `DATEDIFF(x, y)` : 두 날짜 차이 계산  
+
+```sql
+SELECT DATE_ADD('2024-02-18', INTERVAL 10 DAY); -- 결과: '2024-02-28'
+SELECT DATEDIFF('2025-01-01', '2024-12-25'); -- 결과: 7
+```
+
+#### ✅ **비트 연산 (`&`, `|`, `^`)**  
+- `&` (AND), `|` (OR), `^` (XOR) 사용 가능  
+
+```sql
+SELECT 5 & 3, 5 | 3, 5 ^ 3; -- 결과: 1, 7, 6
+```
+
+#### 예시 코드:  
+[예제 코드 보기](https://github.com/yoonc01/solve/blob/main/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4/1/293259.%E2%80%85%EC%9E%A1%EC%9D%80%E2%80%85%EB%AC%BC%EA%B3%A0%EA%B8%B0%EC%9D%98%E2%80%85%ED%8F%89%EA%B7%A0%E2%80%85%EA%B8%B8%EC%9D%B4%E2%80%85%EA%B5%AC%ED%95%98%EA%B8%B0/%EC%9E%A1%EC%9D%80%E2%80%85%EB%AC%BC%EA%B3%A0%EA%B8%B0%EC%9D%98%E2%80%85%ED%8F%89%EA%B7%A0%E2%80%85%EA%B8%B8%EC%9D%B4%E2%80%85%EA%B5%AC%ED%95%98%EA%B8%B0.sql)
+
+---
