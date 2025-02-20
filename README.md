@@ -234,25 +234,24 @@ WHERE PRICE = (SELECT MIN(PRICE) FROM FOOD_PRODUCT WHERE CATEGORY = '식용유')
 
 ---
 
-### 15. 서브쿼리를 이용한 물고기 종류별 최대 길이 조회  
+### 15. 서브쿼리와 JOIN을 활용한 물고기 종류별 최대 길이 조회  
 ✅ **사용되는 SQL 함수**  
-- `JOIN` : 두 개의 테이블을 연결하여 필요한 데이터 조회  
-- `MAX(x)` : 특정 그룹 내 최댓값 조회  
-- `WHERE x = (SELECT MAX(y) FROM table WHERE condition)` : **서브쿼리를 이용한 최댓값 필터링**  
+- `JOIN ON x = y` : 두 테이블을 연결하여 관련 데이터 조회  
+- `MAX(x)` : 특정 그룹에서 최댓값 계산  
+- `GROUP BY x` : 그룹별 집계 연산 수행  
+- `WHERE (x, y) IN (서브쿼리)` : 서브쿼리를 활용한 다중 조건 필터링  
 
 ✅ **설명**  
-1️⃣ `JOIN`을 사용하여 **FISH_INFO** 테이블과 **FISH_NAME_INFO** 테이블을 연결  
-   - `FISH_INFO.FISH_TYPE = FISH_NAME_INFO.FISH_TYPE`을 기준으로 물고기 이름을 매칭  
-2️⃣ 서브쿼리(`SELECT MAX(LENGTH) FROM FISH_INFO WHERE FISH_TYPE = I.FISH_TYPE`)를 활용하여  
-   - **각 물고기 종류(FISH_TYPE)별 가장 큰 물고기의 길이 조회**  
-3️⃣ `WHERE I.LENGTH = (서브쿼리 결과)`를 사용하여  
-   - **각 종류별 최댓값을 가진 행만 필터링**  
-4️⃣ `ORDER BY I.ID ASC`를 적용하여  
-   - **물고기 ID 기준 오름차순 정렬**
+1️⃣ `JOIN FISH_NAME_INFO ON FISH_INFO.FISH_TYPE = FISH_NAME_INFO.FISH_TYPE`  
+   - **FISH_INFO 테이블과 FISH_NAME_INFO 테이블을 조인**하여 물고기 종류별 이름을 가져옴  
+2️⃣ `MAX(LENGTH) OVER (PARTITION BY FISH_TYPE)`  
+   - **물고기 종류별 가장 큰 길이를 찾음**  
+3️⃣ `WHERE (FISH_TYPE, LENGTH) IN (서브쿼리)`  
+   - **각 물고기 종류별로 최댓값을 가진 행만 필터링**  
+4️⃣ `ORDER BY ID ASC`  
+   - **물고기 ID 기준 오름차순 정렬**  
 
 ✅ **예시 코드**  
 [예제 코드 보기](https://github.com/yoonc01/solve/blob/main/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4/3/293261.%E2%80%85%EB%AC%BC%EA%B3%A0%EA%B8%B0%E2%80%85%EC%A2%85%EB%A5%98%E2%80%85%EB%B3%84%E2%80%85%EB%8C%80%EC%96%B4%E2%80%85%EC%B0%BE%EA%B8%B0/%EB%AC%BC%EA%B3%A0%EA%B8%B0%E2%80%85%EC%A2%85%EB%A5%98%E2%80%85%EB%B3%84%E2%80%85%EB%8C%80%EC%96%B4%E2%80%85%EC%B0%BE%EA%B8%B0.sql)  
-
----
 
 ---
