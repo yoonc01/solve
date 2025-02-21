@@ -315,8 +315,17 @@ WHERE PRICE = (SELECT MIN(PRICE) FROM FOOD_PRODUCT WHERE CATEGORY = '식용유')
 - `GROUP BY x` : 특정 열을 기준으로 그룹화하여 집계 연산 수행  
 - `COUNT(*)` : 각 그룹별 데이터 개수 계산  
 - `HAVING x IN (y, z)` : 특정 값만 필터링  
-- `ORDER BY CASE WHEN x THEN y ELSE z END` : 특정 순서로 정렬  
+- `ORDER BY CASE WHEN x THEN y ELSE z END` : 특정 순서로 정렬
 
+```sql
+ORDER BY 
+    CASE 
+        WHEN ANIMAL_TYPE = 'Cat' THEN 1
+        WHEN ANIMAL_TYPE = 'Dog' THEN 2
+        WHEN ANIMAL_TYPE = 'Rabbit' THEN 3
+        ELSE 4 -- 그 외 동물은 마지막 정렬
+    END;
+```
 ✅ **HAVING vs. WHERE 차이점**  
 | 비교 항목 | WHERE | HAVING |
 |-----------|-------------|----------------|
