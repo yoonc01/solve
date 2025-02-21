@@ -255,3 +255,24 @@ WHERE PRICE = (SELECT MIN(PRICE) FROM FOOD_PRODUCT WHERE CATEGORY = '식용유')
 [예제 코드 보기](https://github.com/yoonc01/solve/blob/main/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4/3/293261.%E2%80%85%EB%AC%BC%EA%B3%A0%EA%B8%B0%E2%80%85%EC%A2%85%EB%A5%98%E2%80%85%EB%B3%84%E2%80%85%EB%8C%80%EC%96%B4%E2%80%85%EC%B0%BE%EA%B8%B0/%EB%AC%BC%EA%B3%A0%EA%B8%B0%E2%80%85%EC%A2%85%EB%A5%98%E2%80%85%EB%B3%84%E2%80%85%EB%8C%80%EC%96%B4%E2%80%85%EC%B0%BE%EA%B8%B0.sql)  
 
 ---
+
+### 16. JOIN과 GROUP BY를 활용한 상품코드별 오프라인 매출액 계산  
+✅ **사용되는 SQL 함수**  
+- `JOIN ON x = y` : 두 테이블을 연결하여 관련 데이터 조회  
+- `SUM(x * y)` : 총 매출액 계산 (판매량 * 판매가)  
+- `GROUP BY x` : 그룹별 집계 연산 수행  
+- `ORDER BY x DESC, y ASC` : 내림차순 및 오름차순 정렬  
+
+✅ **설명**  
+1️⃣ `JOIN OFFLINE_SALE ON PRODUCT.PRODUCT_ID = OFFLINE_SALE.PRODUCT_ID`  
+   - **상품 정보(PRODUCT)와 판매 정보(OFFLINE_SALE)를 연결하여 상품별 판매 내역을 가져옴**  
+2️⃣ `SUM(SALES_AMOUNT * PRICE) AS SALES`  
+   - **판매량 * 판매가를 합산하여 상품코드별 총 매출액을 계산**  
+3️⃣ `GROUP BY PRODUCT_CODE`  
+   - **상품 코드(PRODUCT_CODE)별로 그룹화하여 매출액 집계**  
+4️⃣ `ORDER BY SALES DESC, PRODUCT_CODE ASC`  
+   - **매출액이 높은 순으로 정렬하고, 매출액이 같다면 상품 코드를 오름차순 정렬**  
+
+
+✅ **예시 코드**  
+[예제 코드 보기](https://github.com/yoonc01/solve/blob/main/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4/2/131533.%E2%80%85%EC%83%81%ED%92%88%E2%80%85%EB%B3%84%E2%80%85%EC%98%A4%ED%94%84%EB%9D%BC%EC%9D%B8%E2%80%85%EB%A7%A4%EC%B6%9C%E2%80%85%EA%B5%AC%ED%95%98%EA%B8%B0/%EC%83%81%ED%92%88%E2%80%85%EB%B3%84%E2%80%85%EC%98%A4%ED%94%84%EB%9D%BC%EC%9D%B8%E2%80%85%EB%A7%A4%EC%B6%9C%E2%80%85%EA%B5%AC%ED%95%98%EA%B8%B0.sql)  
