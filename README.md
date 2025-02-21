@@ -395,3 +395,32 @@ ORDER BY
 ✅ **예시 코드**  
 [예제 코드 보기](https://github.com/yoonc01/solve/blob/main/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4/3/299305.%E2%80%85%EB%8C%80%EC%9E%A5%EA%B7%A0%EB%93%A4%EC%9D%98%E2%80%85%EC%9E%90%EC%8B%9D%EC%9D%98%E2%80%85%EC%88%98%E2%80%85%EA%B5%AC%ED%95%98%EA%B8%B0/%EB%8C%80%EC%9E%A5%EA%B7%A0%EB%93%A4%EC%9D%98%E2%80%85%EC%9E%90%EC%8B%9D%EC%9D%98%E2%80%85%EC%88%98%E2%80%85%EA%B5%AC%ED%95%98%EA%B8%B0.sql)  
 
+---
+### 21. CASE를 활용한 대장균 개체 크기 분류  
+✅ **사용되는 SQL 함수**  
+- `CASE WHEN x THEN y ELSE z END` : 특정 조건에 따라 값 반환  
+- `ORDER BY x ASC` : 오름차순 정렬  
+
+✅ **설명**  
+1️⃣ `CASE`를 사용하여 크기 범위별로 분류  
+   - `SIZE_OF_COLONY <= 100` → `'LOW'`  
+   - `SIZE_OF_COLONY > 1000` → `'HIGH'`  
+   - 나머지 (`100 < SIZE_OF_COLONY <= 1000`) → `'MEDIUM'`  
+2️⃣ `ORDER BY ID`  
+   - **개체 ID를 기준으로 오름차순 정렬**  
+
+✅ **예제 SQL**  
+```sql
+SELECT ID, 
+       CASE 
+           WHEN SIZE_OF_COLONY <= 100 THEN 'LOW'
+           WHEN SIZE_OF_COLONY > 1000 THEN 'HIGH'
+           ELSE 'MEDIUM'
+       END AS SIZE
+FROM ECOLI_DATA
+ORDER BY ID;
+```
+
+✅ **예시 코드**  
+[예제 코드 보기](https://github.com/yoonc01/solve/blob/main/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4/3/299307.%E2%80%85%EB%8C%80%EC%9E%A5%EA%B7%A0%EC%9D%98%E2%80%85%ED%81%AC%EA%B8%B0%EC%97%90%E2%80%85%EB%94%B0%EB%9D%BC%E2%80%85%EB%B6%84%EB%A5%98%ED%95%98%EA%B8%B0%E2%80%851/%EB%8C%80%EC%9E%A5%EA%B7%A0%EC%9D%98%E2%80%85%ED%81%AC%EA%B8%B0%EC%97%90%E2%80%85%EB%94%B0%EB%9D%BC%E2%80%85%EB%B6%84%EB%A5%98%ED%95%98%EA%B8%B0%E2%80%851.sql)  
+
