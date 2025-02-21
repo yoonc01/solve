@@ -276,3 +276,34 @@ WHERE PRICE = (SELECT MIN(PRICE) FROM FOOD_PRODUCT WHERE CATEGORY = '식용유')
 
 ✅ **예시 코드**  
 [예제 코드 보기](https://github.com/yoonc01/solve/blob/main/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4/2/131533.%E2%80%85%EC%83%81%ED%92%88%E2%80%85%EB%B3%84%E2%80%85%EC%98%A4%ED%94%84%EB%9D%BC%EC%9D%B8%E2%80%85%EB%A7%A4%EC%B6%9C%E2%80%85%EA%B5%AC%ED%95%98%EA%B8%B0/%EC%83%81%ED%92%88%E2%80%85%EB%B3%84%E2%80%85%EC%98%A4%ED%94%84%EB%9D%BC%EC%9D%B8%E2%80%85%EB%A7%A4%EC%B6%9C%E2%80%85%EA%B5%AC%ED%95%98%EA%B8%B0.sql)  
+
+---
+### 17. LEFT JOIN과 NULL 필터링을 이용한 유실된 입양 기록 조회  
+✅ **사용되는 SQL 함수**  
+- `LEFT JOIN ON x = y` : **왼쪽 테이블(기준 테이블)의 모든 데이터를 가져오고, 오른쪽 테이블에서 일치하는 데이터만 가져오는 방식**  
+- `WHERE x IS NULL` : 특정 컬럼이 NULL인 데이터 필터링  
+
+✅ **LEFT JOIN이란?**  
+`LEFT JOIN`은 **두 개의 테이블을 조인할 때, 왼쪽 테이블(기준 테이블)의 모든 데이터를 가져오고, 오른쪽 테이블에서 일치하는 데이터만 가져오는 방식**이야.  
+- 만약 오른쪽 테이블에 일치하는 데이터가 없으면, 해당 컬럼에 **NULL이 들어감**  
+- 이를 활용하면 **어떤 데이터가 없는지 쉽게 찾을 수 있어!**  
+
+💡 **LEFT JOIN의 작동 방식 예시**  
+
+| ANIMAL_OUTS (왼쪽 테이블) | ANIMAL_INS (오른쪽 테이블) | 조인 결과 |
+|----------------|----------------|-----------|
+| A349733, Allie | NULL | A349733, Allie (유실 데이터) |
+| A352713, Gia | A352713, Gia | 제외됨 (데이터 존재) |
+| A349990, Spice | NULL | A349990, Spice (유실 데이터) |
+
+✅ **설명**  
+1️⃣ `LEFT JOIN ANIMAL_INS ON ANIMAL_OUTS.ANIMAL_ID = ANIMAL_INS.ANIMAL_ID`  
+   - **입양된 동물(ANIMAL_OUTS)을 기준**으로 보호소에 들어온 기록(ANIMAL_INS)을 조인  
+   - **입양 기록은 있지만 보호소 기록이 없는 경우 NULL 값이 들어감**  
+2️⃣ `WHERE ANIMAL_INS.ANIMAL_ID IS NULL`  
+   - **NULL인 데이터를 필터링하여 보호소 기록이 없는 유실 데이터를 찾음**  
+3️⃣ `ORDER BY ANIMAL_ID ASC`  
+   - **ID 순으로 정렬하여 결과 출력**  
+
+✅ **예시 코드**  
+[예제 코드 보기](https://github.com/yoonc01/solve/blob/main/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4/3/59042.%E2%80%85%EC%97%86%EC%96%B4%EC%A7%84%E2%80%85%EA%B8%B0%EB%A1%9D%E2%80%85%EC%B0%BE%EA%B8%B0/%EC%97%86%EC%96%B4%EC%A7%84%E2%80%85%EA%B8%B0%EB%A1%9D%E2%80%85%EC%B0%BE%EA%B8%B0.sql)  
