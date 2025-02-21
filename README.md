@@ -372,3 +372,26 @@ ORDER BY
 ✅ **예시 코드**  
 [예제 코드 보기](https://github.com/yoonc01/solve/blob/main/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4/3/157340.%E2%80%85%EC%9E%90%EB%8F%99%EC%B0%A8%E2%80%85%EB%8C%80%EC%97%AC%E2%80%85%EA%B8%B0%EB%A1%9D%EC%97%90%EC%84%9C%E2%80%85%EB%8C%80%EC%97%AC%EC%A4%91%E2%80%85%EF%BC%8F%E2%80%85%EB%8C%80%EC%97%AC%E2%80%85%EA%B0%80%EB%8A%A5%E2%80%85%EC%97%AC%EB%B6%80%E2%80%85%EA%B5%AC%EB%B6%84%ED%95%98%EA%B8%B0/%EC%9E%90%EB%8F%99%EC%B0%A8%E2%80%85%EB%8C%80%EC%97%AC%E2%80%85%EA%B8%B0%EB%A1%9D%EC%97%90%EC%84%9C%E2%80%85%EB%8C%80%EC%97%AC%EC%A4%91%E2%80%85%EF%BC%8F%E2%80%85%EB%8C%80%EC%97%AC%E2%80%85%EA%B0%80%EB%8A%A5%E2%80%85%EC%97%AC%EB%B6%84%ED%95%98%EA%B8%B0.sql)  
 
+---
+### 20. LEFT JOIN과 COUNT를 활용한 대장균 개체의 자식 수 조회  
+✅ **사용되는 SQL 함수**  
+- `LEFT JOIN ON x = y` : 한 테이블을 자기 자신과 조인하여 부모-자식 관계 매칭  
+- `COUNT(x)` : 특정 그룹 내 개수 계산  
+- `GROUP BY x` : 특정 열을 기준으로 그룹화  
+- `ORDER BY x ASC` : 오름차순 정렬  
+
+✅ **설명**  
+1️⃣ `LEFT JOIN ECOLI_DATA C ON E.ID = C.PARENT_ID`  
+   - **ECOLI_DATA 테이블을 자기 자신과 조인하여 부모-자식 관계 형성**  
+   - `E.ID`는 부모 개체, `C.PARENT_ID`는 해당 부모 개체에서 분화된 자식 개체  
+2️⃣ `COUNT(C.PARENT_ID) AS CHILD_COUNT`  
+   - **부모 개체별로 자식 개체 개수를 계산**  
+   - `LEFT JOIN`을 사용했기 때문에 자식이 없는 경우 `NULL`이 되고, `COUNT(NULL)`은 0이 됨  
+3️⃣ `GROUP BY E.ID`  
+   - **각 부모 개체 ID별로 자식 개체 개수 집계**  
+4️⃣ `ORDER BY E.ID`  
+   - **개체 ID 기준 오름차순 정렬**  
+
+✅ **예시 코드**  
+[예제 코드 보기](https://github.com/yoonc01/solve/blob/main/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4/3/299305.%E2%80%85%EB%8C%80%EC%9E%A5%EA%B7%A0%EB%93%A4%EC%9D%98%E2%80%85%EC%9E%90%EC%8B%9D%EC%9D%98%E2%80%85%EC%88%98%E2%80%85%EA%B5%AC%ED%95%98%EA%B8%B0/%EB%8C%80%EC%9E%A5%EA%B7%A0%EB%93%A4%EC%9D%98%E2%80%85%EC%9E%90%EC%8B%9D%EC%9D%98%E2%80%85%EC%88%98%E2%80%85%EA%B5%AC%ED%95%98%EA%B8%B0.sql)  
+
