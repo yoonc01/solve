@@ -424,3 +424,73 @@ ORDER BY ID;
 ✅ **예시 코드**  
 [예제 코드 보기](https://github.com/yoonc01/solve/blob/main/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4/3/299307.%E2%80%85%EB%8C%80%EC%9E%A5%EA%B7%A0%EC%9D%98%E2%80%85%ED%81%AC%EA%B8%B0%EC%97%90%E2%80%85%EB%94%B0%EB%9D%BC%E2%80%85%EB%B6%84%EB%A5%98%ED%95%98%EA%B8%B0%E2%80%851/%EB%8C%80%EC%9E%A5%EA%B7%A0%EC%9D%98%E2%80%85%ED%81%AC%EA%B8%B0%EC%97%90%E2%80%85%EB%94%B0%EB%9D%BC%E2%80%85%EB%B6%84%EB%A5%98%ED%95%98%EA%B8%B0%E2%80%851.sql)  
 
+---
+
+### 22. WITH과 PERCENT_RANK를 활용한 대장균 크기별 분류  
+✅ **사용되는 SQL 함수**  
+- `WITH x AS (...)` : **공통 테이블 표현식(CTE)**, 서브쿼리를 간결하게 작성  
+- `PERCENT_RANK() OVER (ORDER BY x DESC)` : **백분위 순위 계산**  
+- `CASE WHEN x THEN y ELSE z END` : 특정 조건에 따라 값 반환  
+- `ORDER BY x ASC` : 오름차순 정렬  
+
+
+✅ **WITH(공통 테이블 표현식, CTE)란?**  
+`WITH` 문법은 **하나의 서브쿼리를 임시 테이블처럼 사용**하여 쿼리를 더 간결하고 읽기 쉽게 만들어줘!  
+- **장점**  
+  - 복잡한 쿼리를 분리하여 가독성 향상  
+  - 동일한 서브쿼리를 여러 번 사용할 때 성능 최적화 가능  
+
+💡 **CTE 예제**  
+```sql
+WITH TEMP_TABLE AS (
+    SELECT ID, SIZE_OF_COLONY
+    FROM ECOLI_DATA
+)
+SELECT * FROM TEMP_TABLE;
+```
+위 코드는 `ECOLI_DATA` 테이블에서 ID와 크기만 포함하는 `TEMP_TABLE`을 만든 후, 이를 조회하는 방식이야!
+
+
+✅ **PERCENT_RANK()란?**  
+`PERCENT_RANK()`는 **데이터의 순위를 백분율(0~1)로 계산**하는 윈도우 함수야.  
+- 가장 큰 값은 `0`, 가장 작은 값은 `1`에 가까운 값이 돼  
+- `(순위 - 1) / (총 행 개수 - 1)` 공식을 사용  
+
+💡 **PERCENT_RANK 예제**  
+```sql
+SELECT ID, SIZE_OF_COLONY, 
+       PERCENT_RANK() OVER (ORDER BY SIZE_OF_COLONY DESC) AS PCT
+FROM ECOLI_DATA;
+```
+위 쿼리는 대장균 크기를 내림차순으로 정렬한 후, 각 개체의 백분위 순위를 계산해!
+
+
+✅ **설명**  
+1️⃣ `WITH RANKED_ECOLI AS (...)`  
+   - **PERCENT_RANK()를 사용해 크기별 백분위 순위를 계산한 임시 테이블 생성**  
+2️⃣ `CASE WHEN PCT <= 0.25 THEN 'CRITICAL' ... ELSE 'LOW' END`  
+   - **백분위 순위에 따라 그룹을 나눠 COLONY_NAME 부여**  
+3️⃣ `ORDER BY ID`  
+   - **개체 ID 기준으로 오름차순 정렬**  
+
+✅ **예제 SQL**  
+```sql
+WITH RANKED_ECOLI AS (
+    SELECT ID, SIZE_OF_COLONY,
+           PERCENT_RANK() OVER (ORDER BY SIZE_OF_COLONY DESC) AS PCT
+    FROM ECOLI_DATA
+)
+SELECT ID, 
+       CASE 
+           WHEN PCT <= 0.25 THEN 'CRITICAL'
+           WHEN PCT <= 0.50 THEN 'HIGH'
+           WHEN PCT <= 0.75 THEN 'MEDIUM'
+           ELSE 'LOW'
+       END AS COLONY_NAME
+FROM RANKED_ECOLI
+ORDER BY ID;
+```
+
+✅ **예시 코드**  
+[예제 코드 보기](https://github.com/yoonc01/solve/blob/main/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4/3/301649.%E2%80%85%EB%8C%80%EC%9E%A5%EA%B7%A0%EC%9D%98%E2%80%85%ED%81%AC%EA%B8%B0%EC%97%90%E2%80%85%EB%94%B0%EB%9D%BC%E2%80%85%EB%B6%84%EB%A5%98%ED%95%98%EA%B8%B0%E2%80%852/%EB%8C%80%EC%9E%A5%EA%B7%A0%EC%9D%98%E2%80%85%ED%81%AC%EA%B8%B0%EC%97%90%E2%80%85%EB%94%B0%EB%9D%BC%E2%80%85%EB%B6%84%EB%A5%98%ED%95%98%EA%B8%B0%E2%80%852.sql)  
+
