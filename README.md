@@ -307,3 +307,35 @@ WHERE PRICE = (SELECT MIN(PRICE) FROM FOOD_PRODUCT WHERE CATEGORY = '식용유')
 
 ✅ **예시 코드**  
 [예제 코드 보기](https://github.com/yoonc01/solve/blob/main/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4/3/59042.%E2%80%85%EC%97%86%EC%96%B4%EC%A7%84%E2%80%85%EA%B8%B0%EB%A1%9D%E2%80%85%EC%B0%BE%EA%B8%B0/%EC%97%86%EC%96%B4%EC%A7%84%E2%80%85%EA%B8%B0%EB%A1%9D%E2%80%85%EC%B0%BE%EA%B8%B0.sql)  
+
+---
+
+### 18. GROUP BY와 CASE를 활용한 동물 보호소의 고양이·개 개수 조회  
+✅ **사용되는 SQL 함수**  
+- `GROUP BY x` : 특정 열을 기준으로 그룹화하여 집계 연산 수행  
+- `COUNT(*)` : 각 그룹별 데이터 개수 계산  
+- `HAVING x IN (y, z)` : 특정 값만 필터링  
+- `ORDER BY CASE WHEN x THEN y ELSE z END` : 특정 순서로 정렬  
+
+✅ **HAVING vs. WHERE 차이점**  
+| 비교 항목 | WHERE | HAVING |
+|-----------|-------------|----------------|
+| **적용 시점** | **GROUP BY 이전** (행 필터링) | **GROUP BY 이후** (그룹 필터링) |
+| **대상** | 개별 행 | 그룹(집계 함수 적용 후) |
+| **사용 가능 연산** | `=`, `LIKE`, `IN`, `BETWEEN`, `NULL` 체크 등 | `COUNT()`, `SUM()`, `MAX()` 같은 집계 함수 사용 가능 |
+| **예시** | `WHERE ANIMAL_TYPE = 'Cat'` → 고양이 행만 조회 | `HAVING COUNT(*) > 1` → 2마리 이상인 그룹만 조회 |
+
+💡 **WHERE은 개별 행을 걸러내고, HAVING은 그룹화된 결과를 걸러낸다!**  
+
+✅ **설명**  
+1️⃣ `GROUP BY ANIMAL_TYPE`  
+   - **ANIMAL_TYPE(동물 종)별로 그룹화하여 개수를 계산**  
+2️⃣ `COUNT(*) AS count`  
+   - **각 그룹(고양이, 개)의 개수를 계산**  
+3️⃣ `HAVING ANIMAL_TYPE IN ('Cat', 'Dog')`  
+   - **고양이(Cat)와 개(Dog)만 필터링** (`HAVING`을 사용한 이유: GROUP BY 이후 필터링이 필요하기 때문!)  
+4️⃣ `ORDER BY CASE WHEN ANIMAL_TYPE = 'Cat' THEN 1 ELSE 2 END`  
+   - **고양이를 먼저, 개를 나중에 정렬**  
+
+✅ **예시 코드**  
+[예제 코드 보기](https://github.com/yoonc01/solve/blob/main/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4/2/59040.%E2%80%85%EA%B3%A0%EC%96%91%EC%9D%B4%EC%99%80%E2%80%85%EA%B0%9C%EB%8A%94%E2%80%85%EB%AA%87%E2%80%85%EB%A7%88%EB%A6%AC%E2%80%85%EC%9E%88%EC%9D%84%EA%B9%8C/%EA%B3%A0%EC%96%91%EC%9D%B4%EC%99%80%E2%80%85%EA%B0%9C%EB%8A%94%E2%80%85%EB%AA%87%E2%80%85%EB%A7%88%EB%A6%AC%E2%80%85%EC%9E%88%EC%9D%84%EA%B9%8C.sql)  
