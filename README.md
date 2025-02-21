@@ -348,3 +348,27 @@ ORDER BY
 
 ✅ **예시 코드**  
 [예제 코드 보기](https://github.com/yoonc01/solve/blob/main/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4/2/59040.%E2%80%85%EA%B3%A0%EC%96%91%EC%9D%B4%EC%99%80%E2%80%85%EA%B0%9C%EB%8A%94%E2%80%85%EB%AA%87%E2%80%85%EB%A7%88%EB%A6%AC%E2%80%85%EC%9E%88%EC%9D%84%EA%B9%8C/%EA%B3%A0%EC%96%91%EC%9D%B4%EC%99%80%E2%80%85%EA%B0%9C%EB%8A%94%E2%80%85%EB%AA%87%E2%80%85%EB%A7%88%EB%A6%AC%E2%80%85%EC%9E%88%EC%9D%84%EA%B9%8C.sql)  
+
+---
+### 19. CASE와 GROUP BY를 활용한 자동차 대여 상태 조회  
+✅ **사용되는 SQL 함수**  
+- `CASE WHEN x THEN y ELSE z END` : 조건에 따라 값 반환  
+- `BETWEEN x AND y` : 특정 범위 내 데이터 조회  
+- `SUM(CASE WHEN condition THEN 1 ELSE 0 END)` : 조건을 만족하는 개수 계산  
+- `GROUP BY x` : 특정 열을 기준으로 그룹화  
+- `ORDER BY x DESC` : 내림차순 정렬  
+
+✅ **설명**  
+1️⃣ `SUM(CASE WHEN '2022-10-16' BETWEEN START_DATE AND END_DATE THEN 1 ELSE 0 END) > 0`  
+   - **대여 시작일(START_DATE)과 반납일(END_DATE) 사이에 '2022-10-16'이 포함되면 1을 반환**  
+   - `SUM()`을 사용하여 **해당 자동차가 2022-10-16에 대여된 횟수를 계산**  
+2️⃣ `CASE WHEN SUM(...) > 0 THEN '대여중' ELSE '대여 가능' END`  
+   - **대여 횟수가 1 이상이면 '대여중', 그렇지 않으면 '대여 가능'으로 설정**  
+3️⃣ `GROUP BY CAR_ID`  
+   - **자동차 ID별로 그룹화하여 상태를 결정**  
+4️⃣ `ORDER BY CAR_ID DESC`  
+   - **자동차 ID를 기준으로 내림차순 정렬**  
+
+✅ **예시 코드**  
+[예제 코드 보기](https://github.com/yoonc01/solve/blob/main/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4/3/157340.%E2%80%85%EC%9E%90%EB%8F%99%EC%B0%A8%E2%80%85%EB%8C%80%EC%97%AC%E2%80%85%EA%B8%B0%EB%A1%9D%EC%97%90%EC%84%9C%E2%80%85%EB%8C%80%EC%97%AC%EC%A4%91%E2%80%85%EF%BC%8F%E2%80%85%EB%8C%80%EC%97%AC%E2%80%85%EA%B0%80%EB%8A%A5%E2%80%85%EC%97%AC%EB%B6%80%E2%80%85%EA%B5%AC%EB%B6%84%ED%95%98%EA%B8%B0/%EC%9E%90%EB%8F%99%EC%B0%A8%E2%80%85%EB%8C%80%EC%97%AC%E2%80%85%EA%B8%B0%EB%A1%9D%EC%97%90%EC%84%9C%E2%80%85%EB%8C%80%EC%97%AC%EC%A4%91%E2%80%85%EF%BC%8F%E2%80%85%EB%8C%80%EC%97%AC%E2%80%85%EA%B0%80%EB%8A%A5%E2%80%85%EC%97%AC%EB%B6%84%ED%95%98%EA%B8%B0.sql)  
+
