@@ -494,3 +494,69 @@ ORDER BY ID;
 ✅ **예시 코드**  
 [예제 코드 보기](https://github.com/yoonc01/solve/blob/main/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4/3/301649.%E2%80%85%EB%8C%80%EC%9E%A5%EA%B7%A0%EC%9D%98%E2%80%85%ED%81%AC%EA%B8%B0%EC%97%90%E2%80%85%EB%94%B0%EB%9D%BC%E2%80%85%EB%B6%84%EB%A5%98%ED%95%98%EA%B8%B0%E2%80%852/%EB%8C%80%EC%9E%A5%EA%B7%A0%EC%9D%98%E2%80%85%ED%81%AC%EA%B8%B0%EC%97%90%E2%80%85%EB%94%B0%EB%9D%BC%E2%80%85%EB%B6%84%EB%A5%98%ED%95%98%EA%B8%B0%E2%80%852.sql)  
 
+---
+### 23. UNION과 UNION ALL을 활용한 온라인/오프라인 판매 데이터 통합  
+✅ **사용되는 SQL 함수**  
+- `UNION` : 두 개 이상의 쿼리 결과를 **합치면서 중복을 제거**  
+- `UNION ALL` : 두 개 이상의 쿼리 결과를 **그대로 합치고 중복을 유지**  
+- `DATE_FORMAT(x, '%Y-%m-%d')` : 날짜 형식을 `YYYY-MM-DD`로 변환  
+- `YEAR(x)`, `MONTH(x)` : 날짜에서 연도 및 월 추출  
+- `ORDER BY x, y, z` : 다중 기준으로 정렬  
+
+✅ **UNION vs. UNION ALL 차이점**  
+| 연산자 | 중복 제거 | 성능 | 사용 예시 |
+|--------|----------|------|----------|
+| `UNION` | **O** (중복된 행 제거) | **느림** (중복 제거 과정 필요) | 고객 정보 중복 제거 후 조회 |
+| `UNION ALL` | **X** (중복된 행 포함) | **빠름** (있는 그대로 합침) | 로그 데이터 합치기, 중복 포함한 데이터 분석 |
+
+💡 **UNION 예제 (중복 제거)**  
+```sql
+SELECT USER_ID FROM ONLINE_SALE
+UNION
+SELECT USER_ID FROM OFFLINE_SALE;
+```
+→ 온라인과 오프라인에서 **중복 없이** 사용자 ID를 조회  
+
+💡 **UNION ALL 예제 (중복 포함)**  
+```sql
+SELECT USER_ID FROM ONLINE_SALE
+UNION ALL
+SELECT USER_ID FROM OFFLINE_SALE;
+```
+→ 온라인과 오프라인에서 **중복 포함하여** 사용자 ID를 조회  
+
+✅ **설명**  
+1️⃣ `SELECT ... FROM ONLINE_SALE WHERE YEAR(SALES_DATE) = 2022 AND MONTH(SALES_DATE) = 3`  
+   - **2022년 3월의 온라인 판매 데이터 조회**  
+2️⃣ `SELECT ... FROM OFFLINE_SALE WHERE YEAR(SALES_DATE) = 2022 AND MONTH(SALES_DATE) = 3`  
+   - **2022년 3월의 오프라인 판매 데이터 조회**  
+   - `USER_ID`가 없기 때문에 `NULL`로 설정  
+3️⃣ `UNION ALL`  
+   - **두 개의 결과를 중복 포함하여 합침**  
+4️⃣ `ORDER BY SALES_DATE, PRODUCT_ID, USER_ID`  
+   - **판매일 → 상품 ID → 유저 ID 순으로 정렬**  
+
+✅ **예제 SQL**  
+```sql
+SELECT DATE_FORMAT(SALES_DATE, '%Y-%m-%d') AS SALES_DATE, 
+       PRODUCT_ID, 
+       USER_ID, 
+       SALES_AMOUNT
+FROM ONLINE_SALE
+WHERE YEAR(SALES_DATE) = 2022 AND MONTH(SALES_DATE) = 3
+
+UNION ALL
+
+SELECT DATE_FORMAT(SALES_DATE, '%Y-%m-%d') AS SALES_DATE, 
+       PRODUCT_ID, 
+       NULL AS USER_ID, 
+       SALES_AMOUNT
+FROM OFFLINE_SALE
+WHERE YEAR(SALES_DATE) = 2022 AND MONTH(SALES_DATE) = 3
+
+ORDER BY SALES_DATE, PRODUCT_ID, USER_ID;
+```
+
+✅ **예시 코드**  
+[예제 코드 보기](https://github.com/yoonc01/solve/blob/main/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4/4/131537.%E2%80%85%EC%98%A4%ED%94%84%EB%9D%BC%EC%9D%B8%EF%BC%8F%EC%98%A8%EB%9D%BC%EC%9D%B8%E2%80%85%ED%8C%90%EB%A7%A4%E2%80%85%EB%8D%B0%EC%9D%B4%ED%84%B0%E2%80%85%ED%86%B5%ED%95%A9%ED%95%98%EA%B8%B0/%EC%98%A4%ED%94%84%EB%9D%BC%EC%9D%B8%EF%BC%8F%EC%98%A8%EB%9D%BC%EC%9D%B8%E2%80%85%ED%8C%90%EB%A7%A4%E2%80%85%EB%8D%B0%EC%9D%B4%ED%84%B0%E2%80%85%ED%86%B5%ED%95%A9%ED%95%98%EA%B8%B0.sql)  
+
