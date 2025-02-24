@@ -1,6 +1,7 @@
 const fs = require("fs");
 const n = Number(fs.readFileSync(0, "utf8").trim());
 let node;
+const path = [];
 
 dp = [];
 prev = [];
@@ -33,6 +34,7 @@ console.log(dp[n]);
 node = n;
 while (node != 0)
 {
-    process.stdout.write(node + " ");
+    path.push(node);
     node = prev[node];
 }
+console.log(path.join(" "));
