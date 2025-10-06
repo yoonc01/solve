@@ -1,3 +1,7 @@
+## 짝수횟수로 중복된 수를 제거할 때
+- XOR 사용하기
+https://github.com/yoonc01/solve/tree/main/%EB%B0%B1%EC%A4%80/Bronze/3009.%E2%80%85%EB%84%A4%E2%80%85%EB%B2%88%EC%A7%B8%E2%80%85%EC%A0%90
+
 ## DP 접근 근거
 - 중복이 많아 불필요한 연산을 수행할 때 [예제 문항](https://github.com/yoonc01/solve/tree/main/%EB%B0%B1%EC%A4%80/Gold/12852.%E2%80%851%EB%A1%9C%E2%80%85%EB%A7%8C%EB%93%A4%EA%B8%B0%E2%80%852)
 
