@@ -1,10 +1,7 @@
-T = int(input())
+n = int(input())
+nums = [int(input()) for _ in range(n)]
 
-arr = []
-for _ in range(T):
-    n = int(input())
-    arr.append(n)
-    
-arr.sort()
-for i in range(T):
-    print(arr[i])
+nums.sort()
+
+for num in nums:
+    print(num)
