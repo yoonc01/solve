@@ -26,6 +26,38 @@
 - 무게나 합계 조건 등 반복을 돌며 조건을 만족시키는 경우를 찾고, 끝까지 못 찾았을 때만 기본값 출력
 
 [예제 문항](https://github.com/yoonc01/solve/tree/main/%EB%B0%B1%EC%A4%80/Silver/2839.%E2%80%85%EC%84%A4%ED%83%95%E2%80%85%EB%B0%B0%EB%8B%AC)
+
+## 정렬 후 매핑 → 원래 순서 복원 패턴 사용 근거
+- **정렬이 필요한 계산(순위 산출, 압축, 우선순위 매기기 등)**을 수행해야 하지만,  
+  **최종 결과는 입력의 원래 순서대로 출력해야 할 때** 활용
+
+```python
+arr = [50, 10, 30]
+
+# 1. 중복 제거 + 정렬
+sorted_arr = sorted(set(arr))  # [10, 30, 50]
+
+# 2. 정렬된 값 -> 압축 인덱스 매핑
+mapping = {val: idx for idx, val in enumerate(sorted_arr)}
+
+# 3. 원래 순서대로 결과 복원
+result = [mapping[val] for val in arr]
+
+
+# 1. 원래 인덱스를 같이 저장
+indexed = list(enumerate(arr))  # [(0, 50), (1, 10), (2, 30)]
+
+# 2. 값 기준으로 정렬
+indexed.sort(key=lambda x: x[1])  # [(1, 10), (2, 30), (0, 50)]
+
+# 3. 정렬된 순서(예: 순위)를 원래 위치에 다시 기록
+result = [0] * len(arr)
+for rank, (original_idx, _) in enumerate(indexed):
+    result[original_idx] = rank
+```
+
+[예제 문항](https://github.com/yoonc01/solve/tree/main/%EB%B0%B1%EC%A4%80/Silver/18870.%E2%80%85%EC%A2%8C%ED%91%9C%E2%80%85%EC%95%95%EC%B6%95)
+
 ---
 
 ## SQL
