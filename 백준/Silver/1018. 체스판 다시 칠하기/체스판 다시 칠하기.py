@@ -1,8 +1,7 @@
 n, m = map(int, input().split())
-
 board = [input() for _ in range(n)]
 
-ans = 64
+ans = 64  # 8*8 최대 칠해야 할 칸 수
 
 def get_change(case, row, col):
     global ans
@@ -10,15 +9,15 @@ def get_change(case, row, col):
     for i in range(row, row + 8):
         for j in range(col, col + 8):
             if board[i][j] != case[(i + j) % 2]:
-                cnt = cnt + 1
+                cnt += 1
     ans = min(ans, cnt)
-                
-case_1 = ["B", "W"]
-case_2 = ["W", "B"]
-    
+
+case_1 = ["B", "W"]  # 시작이 B인 체스판
+case_2 = ["W", "B"]  # 시작이 W인 체스판
+
 for i in range(n - 7):
     for j in range(m - 7):
         get_change(case_1, i, j)
         get_change(case_2, i, j)
-        
+
 print(ans)
