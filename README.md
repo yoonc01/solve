@@ -1,3 +1,34 @@
+## 최대공약수(GCD) 구하는 방법
+
+- 두 수의 **최대공약수(GCD, Greatest Common Divisor)** 는 두 수를 **나누어떨어지게 하는 공약수 중 가장 큰 수**를 의미한다.  
+- 대표적인 방법은 **유클리드 호제법(Euclidean Algorithm)** 으로, 다음 성질을 이용한다:
+
+>  `gcd(a, b) = gcd(b, a % b)`  
+> 단, `b == 0`이면 `a`가 최대공약수이다.
+
+이 성질을 반복적으로 적용하면 빠르게 최대공약수를 구할 수 있다.  
+시간 복잡도는 `O(log min(a, b))` 로 매우 효율적이다.
+
+---
+
+### 구현 예시 (반복문)
+
+```python
+def gcd(a, b):
+    while b != 0:
+        a, b = b, a % b
+    return a
+````
+
+### 구현 예시 (재귀)
+
+```python
+def gcd(a, b):
+    if b == 0:
+        return a
+    return gcd(b, a % b)
+```
+
 ## XOR 사용 근거
 - 값이 짝수 번 반복되고
 - 원하는 값은 홀수 번 등장하고
