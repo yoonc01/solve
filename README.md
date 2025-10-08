@@ -1,3 +1,12 @@
+## dictionary로 갯수 세기
+```python
+d = {}
+
+for _ in range(n):
+    word = input().strip()
+    d[word] = d.get(word, 0) + 1
+```
+
 ## 최대공약수(GCD) 구하는 방법
 
 - 두 수의 **최대공약수(GCD, Greatest Common Divisor)** 는 두 수를 **나누어떨어지게 하는 공약수 중 가장 큰 수**를 의미한다.  
