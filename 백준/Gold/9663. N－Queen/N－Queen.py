@@ -1,27 +1,25 @@
 n = int(input())
-
-arr = [0 for _ in range(n)]
-
 ans = 0
-def is_possible(idx):
-    for i in range(idx):
-        if arr[idx] - arr[i] == idx - i:
-            return False
-        elif arr[idx] - arr[i] == i - idx:
-            return False
-        elif arr[idx] == arr[i]:
-            return False
-    return True
-     
-def backtrack(idx):
+
+cols = set()          # 사용 중인 열
+diag1 = set()         # ↘ 방향 대각선 (row + col)
+diag2 = set()         # ↙ 방향 대각선 (row - col)
+
+def backtrack(row):
     global ans
-    if idx == n:
-        ans = ans + 1
+    if row == n:
+        ans += 1
         return
-    for i in range(n):
-        arr[idx] = i
-        if is_possible(idx):
-            backtrack(idx + 1)
+    for col in range(n):
+        if col in cols or (row + col) in diag1 or (row - col) in diag2:
+            continue
+        cols.add(col)
+        diag1.add(row + col)
+        diag2.add(row - col)
+        backtrack(row + 1)
+        cols.remove(col)
+        diag1.remove(row + col)
+        diag2.remove(row - col)
+
 backtrack(0)
 print(ans)
-            
