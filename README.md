@@ -23,7 +23,7 @@ def fibo(n):
     return dp[n]
 ````
 
-[예제 문항](https://github.com/yoonc01/solve/tree/main/%EB%B0%B1%EC%A4%80/Silver/9184.%E2%80%85%EC%9E%AC%EA%B7%80%ED%95%A8%EC%88%98)
+[예제 문항](https://github.com/yoonc01/solve/tree/main/%EB%B0%B1%EC%A4%80/Silver/9184.%E2%80%85%EC%8B%A0%EB%82%98%EB%8A%94%E2%80%85%ED%95%A8%EC%88%98%E2%80%85%EC%8B%A4%ED%96%89)
 
 ---
 
@@ -50,7 +50,7 @@ dp[1], dp[2] = 1, 1
 for i in range(3, n + 1):
     dp[i] = dp[i-1] + dp[i-2]
 ```
-
+[예제 문항](https://github.com/yoonc01/solve/tree/main/%EB%B0%B1%EC%A4%80/Bronze/10870.%E2%80%85%ED%94%BC%EB%B3%B4%EB%82%98%EC%B9%98%E2%80%85%EC%88%98%E2%80%855)
 
 ## dictionary로 갯수 세기
 ```python
