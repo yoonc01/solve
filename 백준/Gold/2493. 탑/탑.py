@@ -1,12 +1,15 @@
+import sys
+input = sys.stdin.readline
+
 n = int(input())
 buildings = list(map(int, input().split()))
 ans = [0 for _ in range(n)]
 stack = []
 
-for idx in range(n):
-    while(stack and buildings[idx] > stack[-1][1]):
+for i, h in enumerate(buildings, start=1):
+    while stack and stack[-1][1] < h:
         stack.pop()
-    ans[idx] = stack[-1][0] if stack else 0
-    stack.append((idx + 1, buildings[idx]))
+    ans[i - 1] = stack[-1][0] if stack else 0
+    stack.append((i, h))
 
 print(*ans)
