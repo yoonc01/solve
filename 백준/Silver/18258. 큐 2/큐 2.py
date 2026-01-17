@@ -2,12 +2,13 @@ from collections import deque
 import sys
 
 input = sys.stdin.readline
-
-n = int(input())
 q = deque()
 
+n = int(input())
+
 for _ in range(n):
-    cmd = list(input().split())
+    cmd = input().split()
+    
     if cmd[0] == "push":
         q.append(cmd[1])
     elif cmd[0] == "pop":
@@ -15,7 +16,7 @@ for _ in range(n):
     elif cmd[0] == "size":
         print(len(q))
     elif cmd[0] == "empty":
-        print(0 if q else 1)
+        print(1 if not q else 0)
     elif cmd[0] == "front":
         print(q[0] if q else -1)
     elif cmd[0] == "back":
